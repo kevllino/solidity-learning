@@ -93,22 +93,6 @@ To use the interface in your contract:
 
 You can use the memory keyword with arrays to create a new array inside a function without needing to write anything to storage. The array will only exist until the end of the function call, and this is a lot cheaper gas-wise than updating an array in storage — free if it's a view function called externally.
 
-
-Notes: 
-- You can pass a storage pointer to a struct as an argument to a private or internal function. 
-- memory arrays must be created with a length argument (in this example, 3). They currently cannot be resized like storage arrays can with array.push(), although this may be changed in a future version of Solidity.both external view and pure do not cost gas 
-- hard to implement randomness and stay safe at the same moment => solution is oracle
-- transferring to address `0` is called burning a token, because no one has the private key => unrecoverable
-- vassert is similar to require, where it will throw an error if false. The difference between assert and require is that require will refund the user the rest of their gas when a function fails, whereas assert will not. So most of the time you want to use require in your code; assert is typically used when something has gone horribly wrong with the code (like a uint overflow).
-- commenting use natspec:
-@title and @author are straightforward.
-@notice explains to a user what the contract / function does. @dev is for explaining extra details to developers.
-@param and @return are for describing what each parameter and return value of a function are for.
-- ternary operator: (condition) ? ifTrue : ifFalse
-- the block time for Ethereum is on average 15 seconds
-- A wei is the smallest sub-unit of Ether — there are 10^18 wei in one ether.
-- indexed keyword allows to filter in event listener
-
 ### Security 
 - An important security practice is to examine all your public and external functions, and try to think of ways users might abuse them. 
 
@@ -161,3 +145,19 @@ Ethereum nodes speak one language: JSON_RPC, web3.js hides these json queries
 If you recall, saving data to the blockchain is one of the most expensive operations in Solidity. But using events is much much cheaper in terms of gas.
 
 The tradeoff here is that events are not readable from inside the smart contract itself. But it's an important use-case to keep in mind if you have some data you want to be historically recorded on the blockchain so you can read it from your app's front-end.
+
+
+### Additional notes: 
+- You can pass a storage pointer to a struct as an argument to a private or internal function. 
+- memory arrays must be created with a length argument (in this example, 3). They currently cannot be resized like storage arrays can with array.push(), although this may be changed in a future version of Solidity.both external view and pure do not cost gas 
+- hard to implement randomness and stay safe at the same moment => solution is oracle
+- transferring to address `0` is called burning a token, because no one has the private key => unrecoverable
+- vassert is similar to require, where it will throw an error if false. The difference between assert and require is that require will refund the user the rest of their gas when a function fails, whereas assert will not. So most of the time you want to use require in your code; assert is typically used when something has gone horribly wrong with the code (like a uint overflow).
+- commenting use natspec:
+@title and @author are straightforward.
+@notice explains to a user what the contract / function does. @dev is for explaining extra details to developers.
+@param and @return are for describing what each parameter and return value of a function are for.
+- ternary operator: (condition) ? ifTrue : ifFalse
+- the block time for Ethereum is on average 15 seconds
+- A wei is the smallest sub-unit of Ether — there are 10^18 wei in one ether.
+- indexed keyword allows to filter in event listener
